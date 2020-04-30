@@ -1,0 +1,47 @@
+name: ReadScale-AG  # Name of the container group
+apiVersion: '2018-10-01'
+location: westus
+properties: # Properties of container group
+  containers: # Array of container instances in the group
+  - name: rs-master-01 # Name of an instance
+    properties:
+      image: mcr.microsoft.com/mssql/server:2017-CU19-ubuntu-16.04 # Container image used to create the instance
+      ports:
+      - protocol: tcp
+        port: 1433
+      environmentVariables:
+      - name: ACCEPT_EULA
+        value: "Y"
+      - name: SA_PASSWORD
+        value: "_SqLr0ck5_"
+      resources: # Resource requirements of the instance
+        requests:
+          memoryInGB: 2
+          cpu: 2
+    ipAddress: # IP address configuration of container group
+      ports:
+      - protocol: TCP
+        port: 1433
+      type: Public
+      dnsNameLabel: rs-master-01
+  - name: rs-master-02 # Name of an instance
+    properties:
+      image: mcr.microsoft.com/mssql/server:2017-CU19-ubuntu-16.04 # Container image used to create the instance
+      ports:
+      - protocol: tcp
+        port: 1433
+      environmentVariables:
+      - name: ACCEPT_EULA
+        value: "Y"
+      - name: SA_PASSWORD
+        value: "_SqLr0ck5_"
+      resources: # Resource requirements of the instance
+        requests:
+          memoryInGB: 2
+          cpu: 2
+    ipAddress: # IP address configuration of container group
+      ports:
+      - protocol: TCP
+        port: 1433
+      type: Public
+      dnsNameLabel: rs-master-02

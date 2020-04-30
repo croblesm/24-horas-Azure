@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mssql-tars-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql-tars
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sql-tars
+    spec:
+      terminationGracePeriodSeconds: 5
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: sql-tars
+        image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+        ports:
+          - containerPort: 1401
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tars-cred
+              key: SA_PASSWORD
+        - name: MSSQL_DATA_DIR           
+          value: "/data"
+        - name: MSSQL_LOG_DIR           
+          value: "/log"
+        volumeMounts:
+        - name: mssql-systemdbs
+          mountPath: /var/opt/mssql
+        - name: mssql-userdbs
+          mountPath: /data
+        - name: mssql-log
+          mountPath: /log
+        resources:
+          limits:
+            memory: "8Gi"
+      volumes:
+        - name: mssql-systemdbs
+          persistentVolumeClaim:
+            claimName: pvc-sytemdbs-tars
+        - name: mssql-userdbs
+          persistentVolumeClaim:
+            claimName: pvc-userdbs-tars
+        - name: mssql-log
+          persistentVolumeClaim:
+            claimName: pvc-log-tars
