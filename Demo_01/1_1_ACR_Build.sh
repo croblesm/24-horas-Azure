@@ -1,13 +1,16 @@
 # DEMO 1 - Building custom MSSQL-Tools image with ACR
 #
 #   1- Create Azure Container Registry
-#   2- Check ACR properties
-#   3- Inspect Dockerfile - custom local image
+#   2- List ACR registry
+#   3- Inspect Dockerfile
 #   4- Build local image - mssqltools
-#   5- Tag and push local image to ACR repository
-#   6- Check ACR repositories + images with VS Code Docker extension
-#   7- Build and push image with Azure Cloud shell (single instruction)
-#   8- List images in ACR repository
+#   5- Get image metadata
+#   6- Test custom image with a container
+#   7- Tag and push local image to ACR repository
+#   8- Check ACR repositories + images with VS Code Docker extension
+#   9- Build and push image with Azure Cloud shell (single instruction)
+#   10- List images in ACR repository
+
 # -----------------------------------------------------------------------------
 # References:
 #   Azure Container Registry authentication with service principals
@@ -24,6 +27,7 @@ acr_repo=mssqltools-alpine;
 location=westus;
 cd ~/Documents/$resource_group/Demo_01;
 az acr login --name $acr_name;
+sa_password=_SqLr0ck5_;
 
 # 1- Create Azure Container Registry
 # Create Resource group
@@ -42,13 +46,30 @@ code Dockerfile
 # 4- Build local image - mssqltools
 docker build . -t mssqltools-alpine -f Dockerfile
 
-# 5- Tag and push local image to ACR repository
-# Listing local image
+# 5- Get image metadata
+# List local image
 docker images mssqltools-alpine
 
 # Getting image metadata
 docker inspect mssqltools-alpine | jq -r '.[0].Config.Labels'
 
+# 6- Test custom image with a container
+# Creating SQL Server 2019 container
+docker container run \
+    --name 24-horas-azure \
+    --hostname 24-horas-azure \
+    --env 'ACCEPT_EULA=Y' \
+    --env 'SA_PASSWORD=_SqLr0ck5_' \
+    --publish 1433:1433 \
+    --detach mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-18.04
+
+# Test mssqltools-alpine image / container
+docker container run \
+    --network host \
+    mssqltools-alpine \
+    sqlcmd -S localhost -U SA -P $sa_password -Q "set nocount on; select @@servername;"
+
+# 7- Tag and push local image to ACR repository
 # Getting image id
 image_id=`docker images | grep mssqltools-alpine | awk '{ print $3 }' | head -1`
 
@@ -64,9 +85,9 @@ docker push $acr_name.azurecr.io/$acr_repo:1.0
 # --------------------------------------
 # Visual Studio Code extension - step
 # --------------------------------------
-# 6- Check ACR repositories + images with VS Code Docker extension 👀
+# 8- Check ACR repositories + images with VS Code Docker extension 👀
 
-# 7- Build and push image with Azure Cloud shell (single instruction)
+# 9- Build and push image with Azure Cloud shell (single instruction)
 # No Docker, no problem 👍👌
 
 # Navigate to Azure portal and start a new Azure Cloud shell session
@@ -79,7 +100,7 @@ ls -ll
 # Build, tag and push in a single instruction
 az acr build --image mssqltools-alpine:2.1 --registry dbamastery .
 
-# 8- List images in ACR repository
+# 10- List images in ACR repository
 az acr repository show --name $acr_name --repository $acr_repo -o table
 az acr repository show-manifests --name $acr_name --repository $acr_repo
 az acr repository show-tags --name $acr_name --repository $acr_repo --detail
