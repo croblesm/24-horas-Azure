@@ -1,4 +1,4 @@
-# Demo 04 - SQL Server HA in AKS
+# Demo 04 - SQL Server HA en AKS
 
 * Connect to Kubernetes cluster in AKS
 * Get namespaces, nodes, pods and more

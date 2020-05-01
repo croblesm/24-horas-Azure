@@ -16,7 +16,7 @@ Si estás buscando traducir tu conocimiento existente sobre containers on-prem h
 * [Construyendo una imagen personalizada - MSSQLTools](Demo_01)
 * [Administrando containers con Azure CLI](Demo_02/#part-1---azure-cli-experience)
 * [Administrando containers con Azure portal](Demo_02/#part-2---portal-experience)
-* [Deployment de scripts en SQL containers](Demo_03)
+* [Deployment de scripts en SQL containers en ACI](Demo_03)
 * [SQL Server HA en AKS](Demo_04)
 
 ## Preguntas?

@@ -1,4 +1,4 @@
-# Demo 02 - Managing SQL containers in ACI
+# Demo 02 - Administrando containers en Azure
 
 ### Part 1 - Azure CLI experience
 
