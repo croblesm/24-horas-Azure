@@ -18,14 +18,19 @@
 #   open https://docs.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest
 
 # 0- Env variables | demo path
-resource_group=PASS-Marathon;
+resource_group=24-horas-azure;
 acr_name=dbamastery;
 acr_repo=mssqltools-alpine;
+location=westus;
 cd ~/Documents/$resource_group/Demo_01;
 az acr login --name $acr_name;
 
 # 1- Create Azure Container Registry
-az acr create --resource-group $resource_group --name $acr_name --sku Standard --location westus
+# Create Resource group
+# az group create --name $resource_group --location $location
+
+# Create container registry
+az acr create --resource-group $resource_group --name $acr_name --sku Standard --location $location
 
 # 2- List ACR registry
 az acr list --resource-group $resource_group -o table
@@ -41,6 +46,9 @@ docker build . -t mssqltools-alpine -f Dockerfile
 # Listing local image
 docker images mssqltools-alpine
 
+# Getting image metadata
+docker inspect mssqltools-alpine | jq -r '.[0].Config.Labels'
+
 # Getting image id
 image_id=`docker images | grep mssqltools-alpine | awk '{ print $3 }' | head -1`
 
@@ -51,7 +59,7 @@ docker images
 
 # Pushing image to ACR (dbamastery) - mssqltools-alpine repository
 # Make sure to check ACR authentication and login process with Docker first
-docker push $acr_name.azurecr.io/$acr_repo:2.0
+docker push $acr_name.azurecr.io/$acr_repo:1.0
 
 # --------------------------------------
 # Visual Studio Code extension - step

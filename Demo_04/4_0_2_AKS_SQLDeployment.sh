@@ -15,7 +15,7 @@
 #   https://docs.microsoft.com/en-us/sql/linux/tutorial-sql-server-containers-kubernetes?view=sql-server-ver15
 
 # 0- Env variables | demo path
-resource_group=PASS-Marathon;
+resource_group=24-horas-azure;
 cd ~/Documents/$resource_group/Demo_04;
 sa_password="_EnDur@nc3_";
 
@@ -65,7 +65,7 @@ kubectl describe pods $pod
 kubectl logs $pod -f
 
 # 4- Get service IP
-kubectl get service mssql-tars-service --watch
+kubectl get service mssql-tars-service
 tars_service=`kubectl get service mssql-tars-service | grep mssql-tars | awk {'print $4'}`
 
 # 5- Test connectivity through queries

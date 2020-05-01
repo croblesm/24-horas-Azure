@@ -20,7 +20,7 @@
 #   https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest
 
 # 0- Environment variables | demo path
-resource_group=PASS-Marathon;
+resource_group=24-horas-azure;
 aks_cluster=endurance;
 namespace_simple=plex-sql;
 namespace_complex=tars-sql;
@@ -46,11 +46,11 @@ kubectl describe pvc pvc-data-plex
 kubectl describe pvc pvc-data-plex | grep "Volume:"
 
 # List disks assigned to Kubernetes RG
-az disk list --resource-group MC_PASS-Marathon_endurance_westus --query '[].{Name:name, Size:diskSizeGb, DiskState:diskState}' -o table
+az disk list --resource-group MC_24-horas-azure_endurance_westus --query '[].{Name:name, Size:diskSizeGb, DiskState:diskState}' -o table
 
 # Filtering by individual disk
 az_disk=`kubectl describe pvc pvc-data-plex | grep "Volume:" | awk '{print $2}'`
-az disk list --resource-group MC_PASS-Marathon_endurance_westus --query "[?name=='kubernetes-dynamic-$az_disk'].{Name:name, Size:diskSizeGb, DiskState:diskState}" --output table
+az disk list --resource-group MC_24-horas-azure_endurance_westus --query "[?name=='kubernetes-dynamic-$az_disk'].{Name:name, Size:diskSizeGb, DiskState:diskState}" --output table
 # Go to the portal --> All resources --> Look for PVC disk
 
 # 4- Check pod events

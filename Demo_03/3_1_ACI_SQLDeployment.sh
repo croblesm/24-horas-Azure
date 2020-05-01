@@ -14,7 +14,7 @@
 #   open https://docs.microsoft.com/en-us/azure/container-instances/container-instances-volume-azure-files
 
 # 0- Env variables | demo path
-resource_group=PASS-Marathon
+resource_group=24-horas-azure
 storage_account_name=acivolumes
 location=westus
 file_share_name=aci-fileshare
@@ -33,6 +33,8 @@ az container exec --resource-group $resource_group --name $aci_name --exec-comma
 # 3- Listing folders and files
 
 # Creating temp bash profile
+## Creating temp dir
+# mkdir -p /tmp/sql
 ## Saving bash prompt changes into temp bash profile
 # echo "export PS1=\"[dba mastery@ACI] $ \"" > /tmp/sql/.bashrc
 ## Saving SA password env variable into temp bash profile
