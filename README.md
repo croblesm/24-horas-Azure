@@ -1,5 +1,5 @@
 # 24 Horas de Azure
-## [SQL Server containers en Microsoft Azure](https://www.pass.org/marathon/2020/securedatastorage/Sessions/Details.aspx?sid=104333)
+## [SQL Server containers en Microsoft Azure](https://www.meetup.com/es-ES/Azure-Guatemala/events/269998337/)
 
 Containers ofrecen eficiencia, flexibilidad y portabilidad listos para usar, convirtiéndose en una plataforma muy atractiva para desarrolladores de aplicaciones y bases de datos que desean construir entornos de prueba sin tener que manejar una infraestructura compleja.
 
