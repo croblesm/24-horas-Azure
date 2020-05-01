@@ -80,7 +80,7 @@ docker images
 
 # Pushing image to ACR (dbamastery) - mssqltools-alpine repository
 # Make sure to check ACR authentication and login process with Docker first
-docker push $acr_name.azurecr.io/$acr_repo:1.0
+docker push $acr_name.azurecr.io/$acr_repo:2.0
 
 # --------------------------------------
 # Visual Studio Code extension - step
