@@ -7,6 +7,9 @@ A medida que la tecnología de contenedores crece, se vuelve más relevante y po
 
 Si estás buscando traducir tu conocimiento existente sobre containers on-prem hacia la nube, esta sesión te ayudará en esta nueva experiencia de diseñar, implementar, administrar y monitorear containers de SQL Server en Microsoft Azure.
 
+## Grabacion de YouTube
+[![Webinar - Docker Guatemala](https://img.youtube.com/vi/ykzO3iXdEsQ/hqdefault.jpg)](https://youtu.be/ykzO3iXdEsQ "SQL Server containers en Microsoft Azure")
+
 ## **Prerrequisitos**  
 * Una cuenta valida en Microsoft Azure
 * Experiencia con bases datos de datos y aplicaciones
